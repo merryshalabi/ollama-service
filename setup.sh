@@ -1,20 +1,21 @@
 #!/bin/bash
-
 set -e
 
 echo "🚀 Installing Ollama..."
 curl -fsSL https://ollama.com/install.sh | sh
 
-echo "📦 Pulling model..."
-ollama pull gemma3:1b
-
-echo "🔧 Copying custom systemd service..."
+echo "🔧 Copying service..."
 sudo cp ollama.service /etc/systemd/system/ollama.service
-
-echo "🔁 Reloading and starting systemd service..."
 sudo systemctl daemon-reexec
 sudo systemctl daemon-reload
-sudo systemctl restart ollama
-sudo systemctl enable ollama
+sudo systemctl enable --now ollama
 
-echo "✅ Ollama running on \$OLLAMA_HOST:11434"
+echo "📦 Pulling model as ubuntu..."
+sudo -u ubuntu ollama pull gemma3:1b
+
+echo "🐍 Installing Python client..."
+sudo apt update
+sudo apt install -y python3 python3-pip
+pip3 install --user ollama
+
+echo "✅ Deployment complete. Ollama + Python client ready on localhost:11434."
