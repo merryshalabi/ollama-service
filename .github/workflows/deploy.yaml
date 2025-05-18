@@ -12,7 +12,7 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Deploy to EC2
+    - name: Copy files to EC2
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         EC2_HOST: ${{ secrets.EC2_HOST }}
@@ -21,4 +21,14 @@ jobs:
         mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $EC2_USERNAME@$EC2_HOST 'bash -s' < setup.sh
+
+        # Copy setup.sh and ollama.service to EC2
+        scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa setup.sh ollama.service $EC2_USERNAME@$EC2_HOST:/home/$EC2_USERNAME/
+
+    - name: Run setup.sh on EC2 with OLLAMA_HOST=0.0.0.0
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $EC2_USERNAME@$EC2_HOST "export OLLAMA_HOST=0.0.0.0 && bash /home/$EC2_USERNAME/setup.sh"

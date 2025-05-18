@@ -8,15 +8,13 @@ curl -fsSL https://ollama.com/install.sh | sh
 echo "📦 Pulling model..."
 ollama pull gemma3:1b
 
-echo "🔧 Updating Ollama systemd to bind to 0.0.0.0..."
+echo "🔧 Copying custom systemd service..."
+sudo cp ollama.service /etc/systemd/system/ollama.service
 
-# Patch the systemd service
-sudo sed -i 's|^ExecStart=.*|ExecStart=/usr/local/bin/ollama serve --host 0.0.0.0|' /etc/systemd/system/ollama.service
-
-echo "🔁 Reloading and restarting Ollama service..."
+echo "🔁 Reloading and starting systemd service..."
 sudo systemctl daemon-reexec
 sudo systemctl daemon-reload
 sudo systemctl restart ollama
 sudo systemctl enable ollama
 
-echo "✅ Ollama is deployed and listening on 0.0.0.0:11434"
+echo "✅ Ollama running on \$OLLAMA_HOST:11434"
