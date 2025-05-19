@@ -6,7 +6,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 
 echo "🔧 Copying systemd services..."
 sudo cp /home/ubuntu/ollama.service /etc/systemd/system/ollama.service
-sudo cp /home/ubuntu/ollama-ngrok.service /etc/systemd/system/ngrok.service
+sudo cp /home/ubuntu/ngrok.service /etc/systemd/system/ngrok.service
 
 echo "🔁 Reloading systemd..."
 sudo systemctl daemon-reexec
