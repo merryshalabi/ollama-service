@@ -1,12 +1,15 @@
 [Unit]
-Description=Ollama API Service (Public)
-After=network.target
+Description=Ollama Service
+After=network-online.target
 
 [Service]
-ExecStart=/usr/bin/ollama serve
+ExecStart=/usr/local/bin/ollama serve
 Environment=OLLAMA_HOST=0.0.0.0:11434
-Restart=always
 User=ollama
+Group=ollama
+Restart=always
+RestartSec=3
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
