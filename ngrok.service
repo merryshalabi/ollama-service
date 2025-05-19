@@ -1,0 +1,12 @@
+[Unit]
+Description=Ngrok tunnel for Ollama
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/ngrok http 11434 --domain=hermit-valued-lioness.ngrok-free.app
+Restart=on-failure
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+
+[Install]
+WantedBy=multi-user.target
