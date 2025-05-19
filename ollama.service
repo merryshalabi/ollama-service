@@ -3,7 +3,8 @@ Description=Ollama API Service (Public)
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/ollama serve --address 0.0.0.0:11434
+ExecStart=/usr/bin/ollama serve
+Enviroment=OLLAMA_HOST=0.0.0.0:11434
 Restart=always
 User=ollama
 
