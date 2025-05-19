@@ -4,12 +4,12 @@ After=network-online.target
 
 [Service]
 ExecStart=/usr/local/bin/ollama serve
-Environment=OLLAMA_HOST=0.0.0.0:11434
 User=ollama
 Group=ollama
 Restart=always
 RestartSec=3
-Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+Environment="OLLAMA_HOST=0.0.0.0:11434"
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
