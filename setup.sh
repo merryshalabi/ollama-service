@@ -6,7 +6,8 @@ curl -fsSL https://ollama.com/install.sh | sh
 
 echo "🔧 Copying systemd services..."
 sudo cp /home/ubuntu/ollama.service /etc/systemd/system/ollama.service
-sudo cp /home/ubuntu/ngrok.service /etc/systemd/system/ngrok.service
+sudo cp /home/ubuntu/ollama-ngrok.service /etc/systemd/system/ollama-ngrok.service
+
 
 echo "🔁 Reloading systemd..."
 sudo systemctl daemon-reexec
@@ -16,7 +17,7 @@ echo "🚀 Starting Ollama service..."
 sudo systemctl enable --now ollama
 
 echo "🚀 Starting Ngrok tunnel service..."
-sudo systemctl enable --now ngrok
+sudo systemctl enable --now ollama-ngrok
 
 echo "⏳ Waiting for service to be ready..."
 sleep 3
