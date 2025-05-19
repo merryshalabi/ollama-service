@@ -1,11 +1,11 @@
 [Unit]
-Description=Ollama Service
+Description=Ollama API Service (Public)
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/ollama serve
+ExecStart=/usr/bin/ollama serve --address 0.0.0.0:11434
 Restart=always
-User=ubuntu
+User=ollama
 
 [Install]
 WantedBy=multi-user.target
